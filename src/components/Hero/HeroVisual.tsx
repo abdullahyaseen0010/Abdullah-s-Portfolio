@@ -7,7 +7,7 @@ import {
   TrendingUp, 
   Sparkles
 } from 'lucide-react'
-import { floatingIconsData } from './heroData'
+import { floatingIconsData } from '../../appData/Hero/heroContent'
 
 const icons = [Code2, Rocket, TrendingUp, Sparkles]
 

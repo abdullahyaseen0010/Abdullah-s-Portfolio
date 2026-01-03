@@ -1,97 +1,23 @@
-// app/components/contact/ContactForm.tsx (Client Component)
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle } from 'lucide-react';
 import FormField from './FormField';
-import { contactConfig, formLabels, formPlaceholders, formValidation, successMessage } from './contactData';
-
-interface FormData {
-  name: string;
-  email: string;
-  subject: string;
-  message: string;
-}
-
-interface FormErrors {
-  name?: string;
-  email?: string;
-  subject?: string;
-  message?: string;
-}
+import { useContactForm } from '../../lib/hooks/Contact/useContactForm';
+import { formLabels, formPlaceholders, successMessage } from '../../appData/Contact/contactData';
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
-
-  const [errors, setErrors] = useState<FormErrors>({});
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [focusedField, setFocusedField] = useState<string | null>(null);
-
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    if (!formData.name.trim()) {
-      newErrors.name = formValidation.errors.nameRequired;
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = formValidation.errors.emailRequired;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = formValidation.errors.emailInvalid;
-    }
-
-    if (!formData.subject.trim()) {
-      newErrors.subject = formValidation.errors.subjectRequired;
-    }
-
-    if (!formData.message.trim()) {
-      newErrors.message = formValidation.errors.messageRequired;
-    } else if (formData.message.trim().length < formValidation.minMessageLength) {
-      newErrors.message = formValidation.errors.messageMinLength;
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!validateForm()) return;
-
-    // Create mailto link with form data
-    const mailtoLink = `mailto:${contactConfig.email}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    )}`;
-
-    // Open email client
-    window.location.href = mailtoLink;
-
-    // Show success message and reset form
-    setSubmitStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    
-    // Reset success message after configured duration
-    setTimeout(() => setSubmitStatus('idle'), successMessage.duration);
-  };
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Clear error when user starts typing
-    if (errors[name as keyof FormErrors]) {
-      setErrors(prev => ({ ...prev, [name]: undefined }));
-    }
-  };
+  const {
+    formData,
+    errors,
+    submitStatus,
+    focusedField,
+    handleChange,
+    handleFocus,
+    handleBlur,
+    handleSubmit,
+  } = useContactForm();
 
   return (
     <motion.div
@@ -109,8 +35,8 @@ const ContactForm = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          onFocus={() => setFocusedField('name')}
-          onBlur={() => setFocusedField(null)}
+          onFocus={() => handleFocus('name')}
+          onBlur={handleBlur}
           placeholder={formPlaceholders.name}
           error={errors.name}
           isFocused={focusedField === 'name'}
@@ -125,8 +51,8 @@ const ContactForm = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          onFocus={() => setFocusedField('email')}
-          onBlur={() => setFocusedField(null)}
+          onFocus={() => handleFocus('email')}
+          onBlur={handleBlur}
           placeholder={formPlaceholders.email}
           error={errors.email}
           isFocused={focusedField === 'email'}
@@ -141,8 +67,8 @@ const ContactForm = () => {
           name="subject"
           value={formData.subject}
           onChange={handleChange}
-          onFocus={() => setFocusedField('subject')}
-          onBlur={() => setFocusedField(null)}
+          onFocus={() => handleFocus('subject')}
+          onBlur={handleBlur}
           placeholder={formPlaceholders.subject}
           error={errors.subject}
           isFocused={focusedField === 'subject'}
@@ -157,8 +83,8 @@ const ContactForm = () => {
           name="message"
           value={formData.message}
           onChange={handleChange}
-          onFocus={() => setFocusedField('message')}
-          onBlur={() => setFocusedField(null)}
+          onFocus={() => handleFocus('message')}
+          onBlur={handleBlur}
           placeholder={formPlaceholders.message}
           error={errors.message}
           isFocused={focusedField === 'message'}

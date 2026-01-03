@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { themeConfig } from './navbarData'
+import { themeConfig } from '../../appData/Navbar/navbar.data'
 
 interface NavbarThemeSwitcherProps {
   currentTheme: string
@@ -23,6 +23,8 @@ const NavbarThemeSwitcher = ({
       <button
         onClick={toggleThemeMenu}
         className={`text-primary-content flex items-center gap-2 rounded-md px-4 py-2 transition-all duration-150 ${hoverEffect}`}
+        aria-label="Toggle theme menu"
+        aria-expanded={isThemeMenuOpen}
       >
         <span>{themeConfig[currentTheme as keyof typeof themeConfig]?.name || '🌙 Dark'}</span>
         <motion.span
@@ -50,6 +52,7 @@ const NavbarThemeSwitcher = ({
                 className={`text-primary-content block w-full px-4 py-3 text-left transition-all duration-150 ${hoverEffect} ${
                   currentTheme === key ? 'bg-accent/20 font-semibold' : ''
                 }`}
+                aria-current={currentTheme === key ? 'true' : 'false'}
               >
                 {value.name}
               </button>

@@ -1,4 +1,3 @@
-// components/projects/FeaturedBadge.tsx (Client Component)
 'use client'
 
 import React from 'react';

@@ -1,17 +1,17 @@
-// app/components/services/ServicesCTA.tsx (Client Component)
 'use client'
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { servicesCTA } from './servicesData';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { servicesCTA } from '../../appData/Services/servicesContent'
+import { serviceCTAVariants } from '../../appData/Services/serviceAnimations'
 
 const ServicesCTA = () => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial="initial"
+      whileInView="whileInView"
       viewport={{ once: true }}
-      transition={{ delay: 0.6 }}
+      variants={serviceCTAVariants}
       className="mt-14 text-center relative z-10"
     >
       <p 
@@ -32,7 +32,7 @@ const ServicesCTA = () => {
         {servicesCTA.buttonText}
       </motion.button>
     </motion.div>
-  );
-};
+  )
+}
 
-export default ServicesCTA;
+export default ServicesCTA

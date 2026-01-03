@@ -1,16 +1,16 @@
-// app/components/services/ServicesHeader.tsx (Client Component)
 'use client'
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { servicesHeader } from './servicesData';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { servicesHeader } from '../../appData/Services/servicesContent'
+import { serviceHeaderVariants } from '../../appData/Services/serviceAnimations'
 
 const ServicesHeader = () => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      initial="initial"
+      animate="animate"
+      variants={serviceHeaderVariants}
       className="mb-14 text-center relative z-10"
     >
       <h2 
@@ -29,7 +29,7 @@ const ServicesHeader = () => {
         {servicesHeader.description}
       </p>
     </motion.div>
-  );
-};
+  )
+}
 
-export default ServicesHeader;
+export default ServicesHeader

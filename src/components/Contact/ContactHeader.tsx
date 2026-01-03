@@ -1,10 +1,9 @@
-// app/components/contact/ContactHeader.tsx (Client Component)
 'use client'
 
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Sparkles } from 'lucide-react';
-import { contactHeader } from './contactData';
+import { contactHeader } from '../../appData/Contact/contactData';
 
 const ContactHeader = () => {
   return (

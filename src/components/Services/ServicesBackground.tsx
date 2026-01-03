@@ -1,40 +1,11 @@
-// app/components/services/ServicesBackground.tsx (Client Component)
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { particleConfig } from './servicesData';
-
-interface Particle {
-  id: number;
-  size: number;
-  left: string;
-  top: string;
-  delay: number;
-  duration: number;
-  xOffset: number;
-  yOffset: number;
-}
+import React from 'react'
+import { motion } from 'framer-motion'
+import { useServiceParticles } from '../../lib/hooks/Services/useServiceParticles'
 
 const ServicesBackground = () => {
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    const generatedParticles = Array.from({ length: particleConfig.count }, (_, i) => ({
-      id: i,
-      size: Math.random() * (particleConfig.sizeRange.max - particleConfig.sizeRange.min) + particleConfig.sizeRange.min,
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      delay: Math.random() * 3,
-      duration: particleConfig.durationRange.min + Math.random() * (particleConfig.durationRange.max - particleConfig.durationRange.min),
-      xOffset: Math.random() * (particleConfig.offsetRange.max - particleConfig.offsetRange.min) + particleConfig.offsetRange.min,
-      yOffset: Math.random() * (particleConfig.offsetRange.max - particleConfig.offsetRange.min) + particleConfig.offsetRange.min,
-    }));
-    
-    setParticles(generatedParticles);
-    setMounted(true);
-  }, []);
+  const { particles, mounted } = useServiceParticles()
 
   return (
     <div className="absolute inset-0 pointer-events-none">
@@ -78,7 +49,7 @@ const ServicesBackground = () => {
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default ServicesBackground;
+export default ServicesBackground

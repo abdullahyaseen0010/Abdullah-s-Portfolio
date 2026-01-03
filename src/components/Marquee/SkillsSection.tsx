@@ -1,7 +1,8 @@
 'use client'
 
 import Marquee from './Marquee'
-import { allSkills } from './skillsData'
+import { allSkills, skillsSectionContent } from '../../appData/Marquee/skillsContent'
+import { marqueeConfig } from '../../appData/Marquee/marqueeConfig'
 
 const SkillsSection = () => {
   return (
@@ -9,22 +10,22 @@ const SkillsSection = () => {
       <div className="mx-auto max-w-[1200px] px-4">
         <div className="mb-8 text-center">
           <h2 className="text-primary-content mb-3 text-3xl font-bold lg:text-4xl">
-            Skills & Technologies
+            {skillsSectionContent.title}
           </h2>
           <p className="text-tertiary-content text-base lg:text-lg">
-            2 years of experience building modern web applications
+            {skillsSectionContent.subtitle}
           </p>
         </div>
 
         <Marquee 
           items={allSkills} 
-          speed={40} 
-          pauseOnHover={true}
-          direction="left"
+          speed={marqueeConfig.defaultSpeed} 
+          pauseOnHover={marqueeConfig.defaultPauseOnHover}
+          direction={marqueeConfig.defaultDirection}
         />
 
         <p className="text-tertiary-content mt-6 text-center text-sm opacity-60">
-          Hover to pause
+          {skillsSectionContent.hoverHint}
         </p>
       </div>
     </section>

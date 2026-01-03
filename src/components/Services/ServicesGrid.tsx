@@ -1,12 +1,12 @@
-// app/components/services/ServicesGrid.tsx (Client Component)
 'use client'
 
-import React, { useState } from 'react';
-import { services } from './servicesData';
-import ServiceCard from './ServiceCard';
+import React from 'react'
+import { services } from '../../appData/Services/servicesContent'
+import ServiceCard from './ServiceCard'
+import { useServiceHover } from '../../lib/hooks/Services/useServiceHover'
 
 const ServicesGrid = () => {
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const { hoveredId, handleHoverStart, handleHoverEnd, isHovered } = useServiceHover()
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 relative z-10">
@@ -15,13 +15,13 @@ const ServicesGrid = () => {
           key={service.id}
           service={service}
           index={index}
-          isHovered={hoveredId === service.id}
-          onHoverStart={() => setHoveredId(service.id)}
-          onHoverEnd={() => setHoveredId(null)}
+          isHovered={isHovered(service.id)}
+          onHoverStart={() => handleHoverStart(service.id)}
+          onHoverEnd={handleHoverEnd}
         />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default ServicesGrid;
+export default ServicesGrid

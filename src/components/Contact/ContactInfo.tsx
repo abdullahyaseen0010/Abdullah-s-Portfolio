@@ -1,4 +1,3 @@
-// app/components/contact/ContactInfo.tsx (Client Component)
 'use client'
 
 import React from 'react';

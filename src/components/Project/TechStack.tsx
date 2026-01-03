@@ -1,16 +1,19 @@
-// components/projects/TechStack.tsx (Client Component)
 'use client'
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { getTechDisplay } from '../../lib/utils/Project/techStackUtils'
+import { projectsConfig } from '../../appData/Project/projectsConfig'
 
 interface TechStackProps {
-  tech: string[];
+  tech: string[]
 }
 
 const TechStack = ({ tech }: TechStackProps) => {
-  const displayTech = tech.slice(0, 3);
-  const remainingCount = tech.length - 3;
+  const { displayTech, remainingCount, hasMore } = getTechDisplay(
+    tech, 
+    projectsConfig.maxTechDisplay
+  )
 
   return (
     <div className="flex flex-wrap gap-1.5 mb-4">
@@ -32,7 +35,7 @@ const TechStack = ({ tech }: TechStackProps) => {
           {techItem}
         </motion.span>
       ))}
-      {remainingCount > 0 && (
+      {hasMore && (
         <span 
           className="px-2 py-0.5 text-xs" 
           style={{ color: 'var(--color-tertiary-content)' }}
@@ -41,7 +44,7 @@ const TechStack = ({ tech }: TechStackProps) => {
         </span>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TechStack;
+export default TechStack

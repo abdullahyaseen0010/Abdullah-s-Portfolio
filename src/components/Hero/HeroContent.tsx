@@ -4,8 +4,7 @@ import { motion, AnimatePresence, Variants } from 'framer-motion'
 import { 
   Sparkles, 
   Linkedin, 
-  Mail,
-  FileText
+  Mail
 } from 'lucide-react'
 
 interface HeroContentProps {
@@ -14,6 +13,15 @@ interface HeroContentProps {
   containerVariants: Variants
   itemVariants: Variants
   roleVariants: Variants
+  heroData: {
+    name: string
+    description: string
+    badge: { text: string }
+    cta: {
+      primary: { text: string; href: string }
+      linkedin: { text: string; href: string }
+    }
+  }
 }
 
 const HeroContent = ({ 
@@ -21,7 +29,8 @@ const HeroContent = ({
   roles, 
   containerVariants, 
   itemVariants, 
-  roleVariants 
+  roleVariants,
+  heroData 
 }: HeroContentProps) => {
   return (
     <motion.div
@@ -38,7 +47,7 @@ const HeroContent = ({
           className="text-accent inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2 text-sm font-medium"
         >
           <Sparkles className="h-4 w-4" />
-          Available for Work
+          {heroData.badge.text}
         </motion.div>
 
         <h1 className="space-y-2">
@@ -48,7 +57,7 @@ const HeroContent = ({
           >
             Hi, I&#39;m{' '}
             <span className="bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
-              Abdullah Yaseen
+              {heroData.name}
             </span>
           </motion.span>
 
@@ -73,24 +82,22 @@ const HeroContent = ({
         variants={itemVariants}
         className="text-tertiary-content text-lg lg:text-xl"
       >
-        Building modern, performant web applications with 2 years of experience. 
-        Specializing in React, Next.js, and TailwindCSS to create clean, responsive UIs 
-        and scalable full-stack solutions.
+        {heroData.description}
       </motion.h2>
 
       <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
         <motion.a
-          href="mailto:abdullahyaseen1100@gmail.com"
+          href={heroData.cta.primary.href}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="bg-accent group inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-semibold text-black shadow-lg shadow-accent/25 transition-all hover:shadow-accent/40"
         >
           <Mail className="h-4 w-4" />
-          Hire Me
+          {heroData.cta.primary.text}
         </motion.a>
 
         <motion.a
-          href="https://linkedin.com/in/abdullahyaseen"
+          href={heroData.cta.linkedin.href}
           target="_blank"
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
@@ -98,18 +105,7 @@ const HeroContent = ({
           className="border-border text-neutral inline-flex items-center gap-2 rounded-lg border bg-secondary/50 px-6 py-3 text-sm font-medium backdrop-blur-sm transition-colors hover:bg-secondary"
         >
           <Linkedin className="h-4 w-4" />
-          LinkedIn
-        </motion.a>
-
-        <motion.a
-          href="/resume.pdf"
-          download
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="border-border text-neutral inline-flex items-center gap-2 rounded-lg border bg-secondary/50 px-6 py-3 text-sm font-medium backdrop-blur-sm transition-colors hover:bg-secondary"
-        >
-          <FileText className="h-4 w-4" />
-          Resume
+          {heroData.cta.linkedin.text}
         </motion.a>
       </motion.div>
     </motion.div>

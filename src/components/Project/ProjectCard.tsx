@@ -1,37 +1,38 @@
-// components/projects/ProjectCard.tsx (Client Component)
 'use client'
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Code2 } from 'lucide-react';
-import { Project } from './project';
-import FeaturedBadge from './FeaturedBadge';
-import TechStack from './TechStack';
-import ProjectLinks from './ProjectLinks';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Code2 } from 'lucide-react'
+import { Project } from '../../appData/Project/project'
+import FeaturedBadge from './FeaturedBadge'
+import TechStack from './TechStack'
+import ProjectLinks from './ProjectLinks'
+import { projectCardVariants } from '../../appData/Project/projectAnimations'
+import { projectsConfig } from '../../appData/Project/projectsConfig'
 
 interface ProjectCardProps {
-  project: Project;
-  isHovered: boolean;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
+  project: Project
+  isHovered: boolean
+  onHoverStart: () => void
+  onHoverEnd: () => void
 }
 
 const ProjectCard = ({ project, isHovered, onHoverStart, onHoverEnd }: ProjectCardProps) => {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9 }}
-      transition={{ duration: 0.4, ease: 'easeOut' }}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={projectCardVariants}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
       className="relative group cursor-pointer"
     >
       <motion.div
         initial={{ scale: 1 }}
-        whileHover={{ scale: 1.02 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
+        whileHover={{ scale: projectsConfig.animation.cardHoverScale }}
+        transition={{ duration: projectsConfig.animation.cardHoverDuration, ease: 'easeOut' }}
         className="h-full rounded-xl p-6 relative overflow-hidden"
         style={{ 
           backgroundColor: 'var(--color-secondary)',
@@ -70,7 +71,7 @@ const ProjectCard = ({ project, isHovered, onHoverStart, onHoverEnd }: ProjectCa
         <div className="mb-4 relative z-10">
           <motion.div
             animate={isHovered ? { rotate: 360 } : { rotate: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: projectsConfig.animation.iconRotationDuration }}
             className="w-12 h-12 rounded-lg flex items-center justify-center relative"
             style={{ 
               backgroundColor: 'var(--color-primary)',
@@ -129,7 +130,7 @@ const ProjectCard = ({ project, isHovered, onHoverStart, onHoverEnd }: ProjectCa
         />
       </motion.div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default ProjectCard;
+export default ProjectCard

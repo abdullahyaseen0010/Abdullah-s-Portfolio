@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Logo from './Logo'
+import { navbarConfig } from '../../appData/Navbar/navbar.data'
 
 interface NavbarLogoProps {
   isMenuOpen: boolean
@@ -22,7 +23,9 @@ const NavbarLogo = ({ isMenuOpen }: NavbarLogoProps) => {
         className="text-primary-content relative flex items-center gap-3 transition-all duration-300 md:static"
       >
         <Logo />
-        <span className="text-primary-content font-semibold">Abdullah Yaseen</span>
+        <span className="text-primary-content font-semibold">
+          {navbarConfig.brandName}
+        </span>
       </motion.div>
     </Link>
   )

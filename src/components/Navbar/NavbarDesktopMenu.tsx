@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import NavbarThemeSwitcher from './NavbarThemeSwitcher'
+import { cn } from '../../lib/utils/Navbar'
 
 interface NavbarDesktopMenuProps {
   navLinks: Array<{ label: string; href: string }>
@@ -20,6 +21,13 @@ const NavbarDesktopMenu = ({
   toggleThemeMenu,
   changeTheme,
 }: NavbarDesktopMenuProps) => {
+  const isActive = (href: string) => {
+    if (href === '/' || href === '/#home') {
+      return pathname === '/'
+    }
+    return pathname.includes(href.replace('/#', ''))
+  }
+
   return (
     <ul className="hidden h-full w-[72%] flex-row items-center md:flex lg:w-[70%]">
       {navLinks.map(({ label, href }) => (
@@ -29,9 +37,12 @@ const NavbarDesktopMenu = ({
         >
           <Link
             href={href}
-            className={`text-primary-content w-full transition-all duration-150 ${hoverEffect} ${
-              pathname === href ? 'text-accent cursor-text font-semibold' : ''
-            }`}
+            scroll={false}
+            className={cn(
+              'text-primary-content w-full transition-all duration-150',
+              hoverEffect,
+              isActive(href) && 'text-accent cursor-text font-semibold'
+            )}
           >
             {label}
           </Link>

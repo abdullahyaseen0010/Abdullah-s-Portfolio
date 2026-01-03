@@ -4,7 +4,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle } from 'lucide-react';
-import { whyWorkWithMe } from './contactData';
+import { whyWorkWithMe } from '../../appData/Contact/contactData';
 
 const WhyWorkCard = () => {
   return (

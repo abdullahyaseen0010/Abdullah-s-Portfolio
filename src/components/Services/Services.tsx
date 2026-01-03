@@ -1,9 +1,8 @@
-// app/components/services/Services.tsx (Server Component)
-import React from 'react';
-import ServicesHeader from './ServicesHeader';
-import ServicesGrid from './ServicesGrid';
-import ServicesCTA from './ServicesCTA';
-import ServicesBackground from './ServicesBackground';
+import React from 'react'
+import ServicesHeader from './ServicesHeader'
+import ServicesGrid from './ServicesGrid'
+import ServicesCTA from './ServicesCTA'
+import ServicesBackground from './ServicesBackground'
 
 const Services = () => {
   return (
@@ -20,7 +19,7 @@ const Services = () => {
       {/* Bottom CTA */}
       <ServicesCTA />
     </section>
-  );
-};
+  )
+}
 
-export default Services;
+export default Services

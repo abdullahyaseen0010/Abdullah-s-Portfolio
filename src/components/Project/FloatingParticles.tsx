@@ -1,28 +1,26 @@
-// components/projects/FloatingParticles.tsx (Client Component)
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 
 interface Particle {
-  id: number;
-  size: number;
-  left: string;
-  delay: number;
-  duration: number;
-  xOffset: number;
+  id: number
+  size: number
+  left: string
+  delay: number
+  duration: number
+  xOffset: number
 }
 
 interface FloatingParticlesProps {
-  count?: number;
+  count?: number
 }
 
 const FloatingParticles = ({ count = 20 }: FloatingParticlesProps) => {
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const [mounted, setMounted] = useState(false);
+  const [particles, setParticles] = useState<Particle[]>([])
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Generate particles only on client side
     const generatedParticles = Array.from({ length: count }, (_, i) => ({
       id: i,
       size: Math.random() * 4 + 2,
@@ -30,11 +28,11 @@ const FloatingParticles = ({ count = 20 }: FloatingParticlesProps) => {
       delay: Math.random() * 5,
       duration: 3 + Math.random() * 2,
       xOffset: Math.random() * 100 - 50,
-    }));
+    }))
     
-    setParticles(generatedParticles);
-    setMounted(true);
-  }, [count]);
+    setParticles(generatedParticles)
+    setMounted(true)
+  }, [count])
 
   return (
     <>
@@ -85,7 +83,7 @@ const FloatingParticles = ({ count = 20 }: FloatingParticlesProps) => {
         />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default FloatingParticles;
+export default FloatingParticles

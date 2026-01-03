@@ -1,22 +1,36 @@
-import Navbar from '@/src/components/Navbar/Navbar'
-import Hero from '@/src/components/Hero/Hero'
-import SkillsSection from '@/src/components/Marquee/SkillsSection'
-import Projects from '@/src/components/Project/Projects'
-import Services from '@/src/components/Services/Services'
-import Contact from '@/src/components/Contact/Contact'
-import Testimonials from '@/src/components/Testimonials/Testimonials'
-import Footer from '@/src/components/Footer/Footer'
+'use client'
+
+import Navbar from '../components/Navbar/Navbar'
+import Hero from '../components/Hero/Hero'
+import SkillsSection from '../components/Marquee/SkillsSection'
+import Projects from '../components/Project/Projects'
+import Services from '../components/Services/Services'
+import Contact from '../components/Contact/Contact'
+import Testimonials from '../components/Testimonials/Testimonials'
+import Footer from '../components/Footer/Footer'
+import { useSmoothScroll } from '../lib/hooks/Navbar/useSmoothScroll'
 
 export default function Home() {
+  // Enable smooth scrolling
+  useSmoothScroll()
+
   return (
     <main>
       <Navbar />
-      <Hero />
+      <section id="home">
+        <Hero />
+      </section>
       <SkillsSection />
-      <Projects />
-      <Services />
+      <section id="projects">
+        <Projects />
+      </section>
+      <section id="services">
+        <Services />
+      </section>
       <Testimonials />
-      <Contact />
+      <section id="contact">
+        <Contact />
+      </section>
       <Footer />
     </main>
   )

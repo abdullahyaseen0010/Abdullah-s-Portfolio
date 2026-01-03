@@ -1,4 +1,5 @@
 // app/components/contact/Contact.tsx (Server Component)
+
 import React from 'react';
 import ContactForm from './ContactForm';
 import ContactInfo from './ContactInfo';

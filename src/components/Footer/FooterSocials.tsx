@@ -1,46 +1,61 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { socialLinks } from './footerData'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Linkedin, Mail } from 'lucide-react';
+import { SocialLink } from '../../appData/Footer/footer.types';
+import { useFooterHover } from '../../lib/hooks/Footer/useFooterHover';
+import { FOOTER_ANIMATION_VARIANTS, FOOTER_STYLES } from '../../appData/Footer/footer.constants';
 
-const FooterSocials = () => {
-  const [hoveredSocial, setHoveredSocial] = useState<string | null>(null)
+interface FooterSocialsProps {
+  socialLinks: SocialLink[];
+}
+
+const FooterSocials = ({ socialLinks }: FooterSocialsProps) => {
+  const { hoveredSocial, handleMouseEnter, handleMouseLeave } = useFooterHover();
+
+  const getIcon = (name: string) => {
+    switch (name) {
+      case 'LinkedIn':
+        return Linkedin;
+      case 'Email':
+        return Mail;
+      default:
+        return Mail;
+    }
+  };
 
   return (
     <ul className="flex flex-col gap-4">
       {socialLinks.map((social, index) => {
-        const Icon = social.icon
-        const isHovered = hoveredSocial === social.name
+        const Icon = getIcon(social.name);
+        const isHovered = hoveredSocial === social.name;
         
         return (
           <motion.li 
             key={index}
-            initial={{ opacity: 0, x: -10 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 * index }}
+            {...FOOTER_ANIMATION_VARIANTS.staggered(0.1 * index)}
           >
             <motion.a
               href={social.href}
               target="_blank"
               rel="noopener noreferrer"
-              whileHover={{ x: 4 }}
-              onHoverStart={() => setHoveredSocial(social.name)}
-              onHoverEnd={() => setHoveredSocial(null)}
+              whileHover={FOOTER_ANIMATION_VARIANTS.hover}
+              onHoverStart={() => handleMouseEnter(social.name)}
+              onHoverEnd={handleMouseLeave}
               className="flex items-center gap-2 transition-all duration-300"
               style={{ 
-                color: isHovered ? social.color : 'var(--color-neutral)'
+                color: isHovered ? social.color : FOOTER_STYLES.neutralColor
               }}
             >
               <Icon className="w-5 h-5" />
               <span className="text-sm">{social.name}</span>
             </motion.a>
           </motion.li>
-        )
+        );
       })}
     </ul>
-  )
-}
+  );
+};
 
-export default FooterSocials
+export default FooterSocials;

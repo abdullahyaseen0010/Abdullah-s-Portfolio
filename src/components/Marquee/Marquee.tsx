@@ -1,8 +1,8 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { useAnimationFrame } from 'framer-motion'
+import { useState } from 'react'
 import { LucideIcon } from 'lucide-react'
+import { useMarqueeAnimation } from '../../lib/hooks/Marquee/useMarqueeAnimation'
 
 interface MarqueeItem {
   name: string
@@ -23,25 +23,7 @@ const Marquee = ({
   direction = 'left',
 }: MarqueeProps) => {
   const [isPaused, setIsPaused] = useState(false)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const xPos = useRef(0)
-
-  useAnimationFrame((_, delta) => {
-    if (!contentRef.current || isPaused) return
-
-    const velocity = direction === 'left' ? -speed : speed
-    xPos.current += (velocity * delta) / 1000
-
-    const contentWidth = contentRef.current.offsetWidth / 2
-
-    if (direction === 'left' && xPos.current <= -contentWidth) {
-      xPos.current = 0
-    } else if (direction === 'right' && xPos.current >= 0) {
-      xPos.current = -contentWidth
-    }
-
-    contentRef.current.style.transform = `translateX(${xPos.current}px)`
-  })
+  const contentRef = useMarqueeAnimation({ speed, direction, isPaused })
 
   return (
     <div
@@ -49,7 +31,7 @@ const Marquee = ({
       onMouseEnter={() => pauseOnHover && setIsPaused(true)}
       onMouseLeave={() => pauseOnHover && setIsPaused(false)}
     >
-      <div ref={contentRef} className="flex w-max">
+      <div ref={contentRef} className="flex w-max gap-4 lg:gap-6">
         {/* Original content */}
         <div className="flex shrink-0 items-center gap-4 lg:gap-6">
           {items.map((item, index) => {

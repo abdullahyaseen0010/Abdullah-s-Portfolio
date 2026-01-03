@@ -1,16 +1,24 @@
-// app/components/services/ServiceCard.tsx (Client Component)
 'use client'
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Service } from './servicesData';
+import React from 'react'
+import { motion } from 'framer-motion'
+import { Service } from '../../appData/Services/service'
+import { servicesConfig } from '../../appData/Services/servicesConfig'
+import { serviceCardVariants, featureItemVariants } from '../../appData/Services/serviceAnimations'
+import { 
+  getServiceCardStyles, 
+  getIconBoxShadow, 
+  getIconAnimationConfig,
+  getGlowAnimationConfig,
+  getCornerDecorationConfig 
+} from '../../lib/utils/Services/serviceStyleUtils'
 
 interface ServiceCardProps {
-  service: Service;
-  index: number;
-  isHovered: boolean;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
+  service: Service
+  index: number
+  isHovered: boolean
+  onHoverStart: () => void
+  onHoverEnd: () => void
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -20,25 +28,24 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   onHoverStart,
   onHoverEnd,
 }) => {
-  const Icon = service.icon;
+  const Icon = service.icon
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      initial="initial"
+      whileInView="whileInView"
+      viewport={{ once: servicesConfig.animation.viewportOnce }}
+      transition={{ duration: 0.5, delay: index * servicesConfig.animation.staggerDelay }}
+      variants={serviceCardVariants}
       onHoverStart={onHoverStart}
       onHoverEnd={onHoverEnd}
       className="relative group"
     >
       <motion.div
-        whileHover={{ y: -6 }}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
+        whileHover={{ y: servicesConfig.animation.cardHoverY }}
+        transition={{ duration: servicesConfig.animation.cardHoverDuration, ease: 'easeOut' }}
         className="h-full rounded-xl p-6 relative overflow-hidden bg-secondary/50 backdrop-blur-sm border border-border transition-all cursor-pointer"
-        style={{ 
-          borderColor: isHovered ? service.color : undefined,
-        }}
+        style={getServiceCardStyles(isHovered, service.color)}
       >
         {/* Top accent bar */}
         <div 
@@ -48,18 +55,12 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
         {/* Floating icon background */}
         <motion.div
-          animate={{
-            rotate: isHovered ? [0, 5, -5, 0] : 0,
-            scale: isHovered ? 1.1 : 1,
-          }}
-          transition={{ duration: 0.6 }}
+          animate={getIconAnimationConfig(isHovered)}
+          transition={{ duration: servicesConfig.animation.iconRotationDuration }}
           className="mb-6 relative inline-block"
         >
           <motion.div
-            animate={{
-              opacity: isHovered ? 0.2 : 0.1,
-              scale: isHovered ? [1, 1.3, 1] : 1,
-            }}
+            animate={getGlowAnimationConfig(isHovered)}
             transition={{
               duration: 2,
               repeat: isHovered ? Infinity : 0,
@@ -72,7 +73,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
             className="relative w-16 h-16 rounded-xl flex items-center justify-center"
             style={{ 
               background: service.gradient,
-              boxShadow: isHovered ? `0 10px 40px ${service.color}40` : 'none',
+              boxShadow: getIconBoxShadow(isHovered, service.color),
               transition: 'box-shadow 0.3s ease',
             }}
           >
@@ -100,10 +101,11 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           {service.features.map((feature, idx) => (
             <motion.div
               key={idx}
-              initial={{ opacity: 0, x: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial="initial"
+              whileInView="whileInView"
               viewport={{ once: true }}
               transition={{ delay: 0.1 * idx }}
+              variants={featureItemVariants}
               className="flex items-center gap-2"
             >
               <div 
@@ -122,16 +124,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
 
         {/* Corner decoration */}
         <motion.div
-          animate={{
-            opacity: isHovered ? 1 : 0,
-            scale: isHovered ? 1 : 0.8,
-          }}
+          animate={getCornerDecorationConfig(isHovered)}
           className="absolute bottom-4 right-4 w-20 h-20 rounded-full blur-3xl"
           style={{ background: service.gradient }}
         />
       </motion.div>
     </motion.div>
-  );
-};
+  )
+}
 
-export default ServiceCard;
+export default ServiceCard

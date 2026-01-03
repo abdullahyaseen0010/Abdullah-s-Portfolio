@@ -1,25 +1,9 @@
-// app/components/contact/FormField.tsx (Client Component)
 'use client'
 
 import React from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, MessageSquare, AlertCircle } from 'lucide-react';
-
-interface FormFieldProps {
-  id: string;
-  label: string;
-  type: 'text' | 'email' | 'textarea';
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onFocus: () => void;
-  onBlur: () => void;
-  placeholder: string;
-  error?: string;
-  isFocused: boolean;
-  icon?: 'user' | 'mail' | 'message';
-  rows?: number;
-}
+import { FormFieldProps } from '../../appData/Contact/contactTypes';
 
 const FormField: React.FC<FormFieldProps> = ({
   id,
